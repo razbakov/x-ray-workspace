@@ -1,0 +1,9 @@
+# A registry describes one workspace: its accounts, hosts, credentials and,
+# in a delivery workspace, its clients. It belongs in the workspace it maps,
+# never in this repository. Point the server at yours with TOOLSDASH_REGISTRY.
+registry.json
+/assets/registry.json
+
+__pycache__/
+*.pyc
+.DS_Store
