@@ -80,13 +80,16 @@ keeps a real one out by accident.
 | Path | Role |
 |---|---|
 | `SKILL.md` | The procedure: measure, card, probe, wire, validate. |
-| `references/REGISTRY.md` | The schema every entry must satisfy, and the rules a probe must obey. |
+| `schema.json` | JSON Schema (draft 2020-12) for a registry. Authoritative for structure; `validate.py` loads it rather than restating it. Reference it from your registry for editor completion. |
+| `references/REGISTRY.md` | The same schema in prose, plus the judgement a schema cannot hold, and the rules a probe must obey. |
 | `scripts/scan.py` | Reads the session transcripts. Calls, errors, last use, last failure with its text, session, project. |
 | `scripts/server.py` | Merges registry + scan + live probes. Serves `/`, `/map`, `/api/state`. |
-| `scripts/validate.py` | The gate: schema, resolvable references, valid regexes, read-only probes, unmatched keys. |
+| `scripts/validate.py` | The gate. Structure from `schema.json`, then the rules it cannot express: resolvable references, unique ids, valid regexes, read-only probes, unmatched usage keys. `validate.py selftest` checks the checker. |
 | `assets/` | The two views, and the example registry. |
 
-Python standard library only. No pip installs, no network access, no telemetry.
+Python standard library only. No pip installs, no network access, no telemetry. `validate.py`
+uses the `jsonschema` package when it happens to be installed and a built-in validator otherwise,
+so it runs either way — a validator you cannot run is not a validator.
 
 ## Writing a probe
 

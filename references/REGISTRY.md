@@ -10,6 +10,26 @@ transcripts, health comes from the probes declared here.
 Edit the file and refresh the page. There is no build step and no restart: the server re-reads it on
 every refresh.
 
+## The machine-readable schema
+
+[`schema.json`](../schema.json) (JSON Schema draft 2020-12) is authoritative for **structure**:
+fields, types, enums, the id pattern, and which fields are required. `validate.py` loads it rather
+than restating it, so the shapes are declared once.
+
+Point your editor at it and you get completion and inline errors while you write entries:
+
+```json
+{ "$schema": "https://raw.githubusercontent.com/razbakov/x-ray-workspace/main/schema.json", ... }
+```
+
+The field table below is the readable version of the same thing, plus the judgement a schema
+cannot hold — what belongs in each field, and why.
+
+What the schema deliberately does **not** cover, because JSON Schema cannot reach it, and
+`validate.py` does instead: a `depends_on` or `ref` resolving to an id **in the same file**,
+duplicate ids, `probe_ok` compiling as a regex, a probe that looks like it writes, and whether a
+`usage_keys` prefix matches anything the transcripts actually recorded.
+
 ## Shape
 
 ```json
@@ -25,7 +45,7 @@ flag for a live reading.
 
 ## Fields
 
-Every field below is required except `probe_ok`. Write all of them even when the answer is "none" —
+Every field below is required except `probe_ok` and the optional `$schema` line. Write all of them even when the answer is "none" —
 an empty `alternatives` list is a finding (single point of failure), not a gap in the data.
 
 | Field | Type | What it is |

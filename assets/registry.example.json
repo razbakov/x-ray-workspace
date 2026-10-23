@@ -1,4 +1,5 @@
 {
+  "$schema": "../schema.json",
   "meta": {
     "owner": "<whose access this describes>",
     "connected_verified": "2026-10-23",
@@ -9,17 +10,30 @@
       "id": "tracker-mcp",
       "name": "Issue tracker (MCP connector)",
       "category": "mcp",
-      "access": "MCP connector (remote OAuth) · server <id>",
+      "access": "MCP connector (remote OAuth) \u00b7 server <id>",
       "connected_now": true,
       "owner_agent": "Ops",
-      "also_used_by": ["Architect"],
-      "usage_keys": ["mcp__<server-id>__"],
+      "also_used_by": [
+        "Architect"
+      ],
+      "usage_keys": [
+        "mcp__<server-id>__"
+      ],
       "depends_on": [],
       "alternatives": [
-        { "kind": "cli", "what": "the tracker's CLI, which works unattended", "state": "live", "ref": "tracker-cli" },
-        { "kind": "web", "what": "the web UI", "state": "always" }
+        {
+          "kind": "cli",
+          "what": "the tracker's CLI, which works unattended",
+          "state": "live",
+          "ref": "tracker-cli"
+        },
+        {
+          "kind": "web",
+          "what": "the web UI",
+          "state": "always"
+        }
       ],
-      "fix": "OAuth connector — reconnect it in the desktop app. It is absent from headless and cron runs by design, which is what the CLI entry is for.",
+      "fix": "OAuth connector \u2014 reconnect it in the desktop app. It is absent from headless and cron runs by design, which is what the CLI entry is for.",
       "docs": "CLAUDE.md, the Tools section",
       "probe": null,
       "notes": "An OAuth connector has nothing checkable from a shell, so it reports on connected_now plus its transcript history rather than a fabricated probe."
@@ -28,16 +42,23 @@
       "id": "tracker-cli",
       "name": "Issue tracker (CLI)",
       "category": "cli",
-      "access": "CLI · installed binary, token in the keyring",
+      "access": "CLI \u00b7 installed binary, token in the keyring",
       "connected_now": true,
       "owner_agent": "Ops",
       "also_used_by": [],
-      "usage_keys": ["cli:tracker"],
+      "usage_keys": [
+        "cli:tracker"
+      ],
       "depends_on": [],
       "alternatives": [
-        { "kind": "mcp", "what": "the MCP connector, interactive only", "state": "live", "ref": "tracker-mcp" }
+        {
+          "kind": "mcp",
+          "what": "the MCP connector, interactive only",
+          "state": "live",
+          "ref": "tracker-mcp"
+        }
       ],
-      "fix": "Run the tool's own auth login against the right host. Check the version too — an outdated client fails in ways that read like permission errors.",
+      "fix": "Run the tool's own auth login against the right host. Check the version too \u2014 an outdated client fails in ways that read like permission errors.",
       "docs": "",
       "probe": "command -v tracker >/dev/null && tracker --version 2>&1 | head -1 || echo FAIL",
       "probe_ok": "version",
@@ -47,14 +68,20 @@
       "id": "nightly-sync",
       "name": "Nightly sync (scheduled)",
       "category": "automation",
-      "access": "LaunchAgent com.example.nightly-sync · 02:00 daily",
+      "access": "LaunchAgent com.example.nightly-sync \u00b7 02:00 daily",
       "connected_now": true,
       "owner_agent": "Ops",
       "also_used_by": [],
       "usage_keys": [],
-      "depends_on": ["tracker-cli"],
+      "depends_on": [
+        "tracker-cli"
+      ],
       "alternatives": [
-        { "kind": "manual", "what": "run the script by hand", "state": "live" }
+        {
+          "kind": "manual",
+          "what": "run the script by hand",
+          "state": "live"
+        }
       ],
       "fix": "Re-run the installer after any machine wipe. A LaunchAgent that was never loaded fails exactly like one with nothing to do, which is why this entry exists at all.",
       "docs": "ops/<name>/README.md",
